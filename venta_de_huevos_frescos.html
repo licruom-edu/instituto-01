@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huevos Frescos - Las Mejores Ofertas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        eggPurple: '#5D2E8C',
+                        eggPurpleDark: '#3D1C60',
+                        eggYellow: '#FFC800',
+                        eggYellowHover: '#E5B300',
+                        eggSky: '#87CEEB'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .mascot-shadow {
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.2));
+        }
+        .text-stroke {
+            -webkit-text-stroke: 2px #3D1C60;
+        }
+        .carousel-slide {
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-gray-800 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-eggPurple text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- SVG Mascot Icon -->
+                <div class="w-10 h-10 bg-eggYellow rounded-full flex items-center justify-center border-2 border-white shadow">
+                    <span class="text-2xl">🥚</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wide leading-none text-eggYellow">SÚPER HUEVO</h1>
+                    <p class="text-xs text-purple-200">Frescura Directa a tu Mesa</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/51910770209?text=Hola,%20quisiera%20consultar%20sobre%20la%20venta%20de%20huevos%20frescos." 
+                   target="_blank" 
+                   class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full text-sm transition shadow-md">
+                    <i class="fab fa-whatsapp text-lg"></i>
+                    <span>910 770 209</span>
+                </a>
+                <button onclick="openCartModal()" class="relative bg-white text-eggPurple p-2.5 rounded-full font-bold shadow hover:bg-eggYellow transition">
+                    <i class="fas fa-shopping-basket text-lg"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative bg-gradient-to-b from-sky-300 via-sky-200 to-slate-50 py-10 px-4 overflow-hidden">
+            <!-- Animated Clouds Background -->
+            <div class="absolute inset-0 opacity-40 pointer-events-none">
+                <div class="absolute top-5 left-10 text-white text-6xl opacity-80"><i class="fas fa-cloud"></i></div>
+                <div class="absolute top-20 right-20 text-white text-8xl opacity-60"><i class="fas fa-cloud"></i></div>
+                <div class="absolute bottom-10 left-1/3 text-white text-7xl opacity-50"><i class="fas fa-cloud"></i></div>
+            </div>
+
+            <div class="max-w-5xl mx-auto relative z-10">
+                <div class="text-center mb-6">
+                    <span class="bg-eggPurple text-eggYellow px-4 py-1.5 rounded-full text-sm font-black uppercase tracking-wider shadow-md inline-block mb-2">
+                        ⭐ Gran Subasta de Frescura ⭐
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-800 uppercase tracking-tight">
+                        ¡Ofertas Voladoras por Tiempo Limitado!
+                    </h2>
+                    <p class="text-gray-600 font-medium mt-1">Selecciona la categoría o bandeja perfecta para tu hogar o negocio</p>
+                </div>
+
+                <!-- Carousel Wrapper -->
+                <div class="relative max-w-3xl mx-auto">
+                    <!-- Carousel Slides Container -->
+                    <div id="carousel-slides" class="relative min-h-[420px] md:min-h-[380px] flex items-center justify-center">
+                        <!-- Slides dynamically rendered by JS -->
+                    </div>
+
+                    <!-- Carousel Controls -->
+                    <button onclick="prevSlide()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-6 bg-white/90 hover:bg-eggYellow text-eggPurple hover:text-slate-900 p-3 md:p-4 rounded-full shadow-lg z-20 transition border border-purple-200">
+                        <i class="fas fa-chevron-left text-xl"></i>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-6 bg-white/90 hover:bg-eggYellow text-eggPurple hover:text-slate-900 p-3 md:p-4 rounded-full shadow-lg z-20 transition border border-purple-200">
+                        <i class="fas fa-chevron-right text-xl"></i>
+                    </button>
+
+                    <!-- Indicators -->
+                    <div id="carousel-indicators" class="flex justify-center gap-2 mt-4">
+                        <!-- Indicators dynamic -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-6xl mx-auto px-4 py-12">
+            <div class="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
+                <div>
+                    <h3 class="text-2xl font-black text-eggPurple">Nuestros Tipos de Huevos</h3>
+                    <p class="text-gray-500 text-sm">Escoge el tamaño y peso que mejor se adapte a ti</p>
+                </div>
+                <span class="hidden sm:inline-block bg-purple-100 text-eggPurple text-xs font-bold px-3 py-1.5 rounded-lg">
+                    Precios en Soles (S/)
+                </span>
+            </div>
+
+            <!-- Grid of Products -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Dynamic Product Cards populated by JS -->
+            </div>
+        </section>
+
+        <section class="bg-eggPurple text-white py-12 px-4 relative overflow-hidden">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10 text-center md:text-left">
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="w-12 h-12 bg-eggYellow text-eggPurple rounded-2xl flex items-center justify-center text-2xl mb-3 shadow">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-eggYellow">Entrega Rápida</h4>
+                    <p class="text-sm text-purple-200 mt-1">Llevamos tus huevos frescos directamente a tu puerta sin romper ni uno.</p>
+                </div>
+
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="w-12 h-12 bg-eggYellow text-eggPurple rounded-2xl flex items-center justify-center text-2xl mb-3 shadow">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-eggYellow">100% Frescura Garantizada</h4>
+                    <p class="text-sm text-purple-200 mt-1">Seleccionados minuciosamente día a día para garantizar máxima calidad nutricional.</p>
+                </div>
+
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="w-12 h-12 bg-eggYellow text-eggPurple rounded-2xl flex items-center justify-center text-2xl mb-3 shadow">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4 class="font-bold text-lg text-eggYellow">Pedidos Flexibles</h4>
+                    <p class="text-sm text-purple-200 mt-1">Atención personalizada vía WhatsApp o correo electrónico para compras masivas o del hogar.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-eggPurpleDark text-white pt-10 pb-6 border-t border-purple-800">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 border-b border-purple-800">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-2xl">🥚</span>
+                    <h3 class="text-xl font-black text-eggYellow">SÚPER HUEVO</h3>
+                </div>
+                <p class="text-purple-200 text-sm leading-relaxed">
+                    Somos distribuidores de huevos frescos de la más alta calidad. Venta por bandeja con precios insuperables desde S/ 12.00.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-3 text-lg border-b border-purple-700 pb-1 inline-block">Contacto Directo</h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="https://wa.me/51910770209" target="_blank" class="flex items-center gap-3 text-purple-200 hover:text-eggYellow transition">
+                            <i class="fab fa-whatsapp text-green-400 text-lg"></i>
+                            <span><strong>WhatsApp:</strong> 910 770 209</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:licruom@gmail.com" class="flex items-center gap-3 text-purple-200 hover:text-eggYellow transition">
+                            <i class="fas fa-envelope text-eggYellow text-lg"></i>
+                            <span><strong>Correo:</strong> licruom@gmail.com</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-white mb-3 text-lg border-b border-purple-700 pb-1 inline-block">Haz tu Pedido Rápidamente</h4>
+                <p class="text-purple-200 text-sm mb-3">¿Tienes dudas o deseas comprar al por mayor? Escríbenos directamente:</p>
+                <a href="https://wa.me/51910770209?text=Hola,%20deseo%20mayor%20información%20sobre%20pedidos%20de%20huevos." 
+                   target="_blank" 
+                   class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-5 rounded-xl shadow transition text-sm">
+                    <i class="fab fa-whatsapp text-lg"></i> Chatear por WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 pt-6 text-center text-xs text-purple-300">
+            <p>&copy; 2026 Súper Huevo Fresco. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative animate-fade-in">
+            <button onclick="closeCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-bold p-1">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-eggPurple text-eggYellow rounded-full flex items-center justify-center text-lg">
+                    <i class="fas fa-shopping-basket"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black text-eggPurple">Tu Pedido de Huevos</h3>
+                    <p class="text-xs text-gray-500">Revisa tu pedido antes de enviarlo por WhatsApp</p>
+                </div>
+            </div>
+
+            <div id="cart-items-container" class="max-h-60 overflow-y-auto mb-4 divide-y divide-gray-100">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="bg-gray-50 p-3 rounded-xl mb-4 border border-gray-100">
+                <div class="flex justify-between items-center font-black text-lg text-slate-800">
+                    <span>Total Estimado:</span>
+                    <span id="cart-total-price" class="text-eggPurple">S/ 0.00</span>
+                </div>
+            </div>
+
+            <button onclick="sendCartToWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg transition">
+                <i class="fab fa-whatsapp text-xl"></i>
+                <span>Enviar Pedido a WhatsApp (910770209)</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data for offers/products (S/ 12, 13, 14, 15, 16)
+        const products = [
+            {
+                id: 12,
+                price: "12.00",
+                title: "Oferta Económica",
+                subtitle: "Bandeja Estándar (30 Unid.)",
+                desc: "Huevos frescos seleccionados de tamaño mediano, ideales para el consumo diario en el hogar.",
+                weight: "Aprox. 1.8 kg / bandeja",
+                badge: "¡SÚPER AHORRO!"
+            },
+            {
+                id: 13,
+                price: "13.00",
+                title: "Oferta Popular",
+                subtitle: "Bandeja Especial (30 Unid.)",
+                desc: "Excelente relación calidad y tamaño. Perfecto balance de proteínas para toda la familia.",
+                weight: "Aprox. 1.95 kg / bandeja",
+                badge: " MÁS VENDIDO"
+            },
+            {
+                id: 14,
+                price: "14.00",
+                title: "Oferta Selección",
+                subtitle: "Bandeja Grande (30 Unid.)",
+                desc: "Huevos grandes con yema intensa y cáscara firme. Ideal para repostería y desayunos nutritivos.",
+                weight: "Aprox. 2.1 kg / bandeja",
+                badge: "RECOMENDADO"
+            },
+            {
+                id: 15,
+                price: "15.00",
+                title: "Oferta Extra",
+                subtitle: "Bandeja Extra Grande (30 Unid.)",
+                desc: "Tamaño extra grande para exigentes. Ideal para restaurantes, negocios y repostería alta.",
+                weight: "Aprox. 2.25 kg / bandeja",
+                badge: "CALIDAD PREMIUM"
+            },
+            {
+                id: 16,
+                price: "16.00",
+                title: "Oferta Jumbo",
+                subtitle: "Bandeja Jumbo Especial (30 Unid.)",
+                desc: "Los huevos más grandes y seleccionados minuciosamente. Máximo peso y calidad garantizada.",
+                weight: "Aprox. 2.4 kg / bandeja",
+                badge: "¡TAMAÑO JUMBO!"
+            }
+        ];
+
+        let currentIndex = 0;
+        let cart = {};
+
+        // Render Carousel
+        function renderCarousel() {
+            const container = document.getElementById('carousel-slides');
+            const indicators = document.getElementById('carousel-indicators');
+            
+            container.innerHTML = '';
+            indicators.innerHTML = '';
+
+            products.forEach((prod, idx) => {
+                const isCurrent = idx === currentIndex;
+                
+                // Render Slide
+                const slide = document.createElement('div');
+                slide.className = `carousel-slide absolute inset-0 flex flex-col md:flex-row items-center justify-center bg-white rounded-3xl p-6 shadow-2xl border-4 border-eggPurple ${isCurrent ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-95 pointer-events-none'}`;
+                
+                // SVG Character Graphics dynamically created per card
+                slide.innerHTML = `
+                    <!-- Left: Super Egg SVG Graphic -->
+                    <div class="w-full md:w-1/2 flex justify-center items-center mb-4 md:mb-0 relative">
+                        <div class="relative w-48 h-48 md:w-56 md:h-56">
+                            <!-- Cloud Background Graphic -->
+                            <div class="absolute inset-0 bg-sky-100 rounded-full blur-xl opacity-70"></div>
+                            <!-- Super Egg Mascot SVG -->
+                            <svg viewBox="0 0 200 220" class="w-full h-full mascot-shadow relative z-10">
+                                <!-- Cape -->
+                                <path d="M 40 90 Q 10 160 30 200 Q 100 180 170 200 Q 190 160 160 90 Z" fill="#5D2E8C" />
+                                <path d="M 50 100 Q 25 155 40 185 Q 100 170 160 185 Q 175 155 150 100 Z" fill="#3D1C60" />
+                                
+                                <!-- Egg Body -->
+                                <ellipse cx="100" cy="115" rx="55" ry="70" fill="#FFFFFF" stroke="#3D1C60" stroke-width="4"/>
+                                
+                                <!-- Hat / Cap -->
+                                <path d="M 60 60 Q 100 20 140 60 Q 100 50 60 60 Z" fill="#5D2E8C" stroke="#3D1C60" stroke-width="3"/>
+                                <path d="M 70 55 Q 100 30 130 55" fill="none" stroke="#FFC800" stroke-width="6" stroke-dasharray="10 5"/>
+
+                                <!-- Face Features -->
+                                <!-- Eyes -->
+                                <ellipse cx="82" cy="100" rx="9" ry="12" fill="#FFFFFF" stroke="#3D1C60" stroke-width="3"/>
+                                <ellipse cx="118" cy="100" rx="9" ry="12" fill="#FFFFFF" stroke="#3D1C60" stroke-width="3"/>
+                                <circle cx="84" cy="102" r="4" fill="#3D1C60"/>
+                                <circle cx="116" cy="102" r="4" fill="#3D1C60"/>
+                                <!-- Eyebrows (Determined / Friendly) -->
+                                <path d="M 72 85 Q 82 80 92 88" fill="none" stroke="#3D1C60" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M 108 88 Q 118 80 128 85" fill="none" stroke="#3D1C60" stroke-width="4" stroke-linecap="round"/>
+                                <!-- Smile -->
+                                <path d="M 85 125 Q 100 140 115 125" fill="none" stroke="#3D1C60" stroke-width="4" stroke-linecap="round"/>
+                                <!-- Rosy Cheeks -->
+                                <ellipse cx="73" cy="115" rx="6" ry="4" fill="#FF8A8A" opacity="0.6"/>
+                                <ellipse cx="127" cy="115" rx="6" ry="4" fill="#FF8A8A" opacity="0.6"/>
+                                
+                                <!-- Boots -->
+                                <ellipse cx="75" cy="182" rx="14" ry="8" fill="#8B4513" stroke="#3D1C60" stroke-width="3"/>
+                                <ellipse cx="125" cy="182" rx="14" ry="8" fill="#8B4513" stroke="#3D1C60" stroke-width="3"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Right: Signboard & Offer Content -->
+                    <div class="w-full md:w-1/2 text-center md:text-left flex flex-col justify-between">
+                        <div>
+                            <span class="bg-eggPurple text-eggYellow font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
+                                ${prod.badge}
+                            </span>
+                            <h3 class="text-2xl font-black text-slate-800 leading-tight">${prod.title}</h3>
+                            <p class="text-sm text-gray-500 font-medium mb-3">${prod.subtitle}</p>
+                            
+                            <!-- Banner Signboard Graphic -->
+                            <div class="bg-gradient-to-r from-purple-700 to-eggPurple text-white p-4 rounded-2xl shadow-lg border-2 border-eggYellow mb-4">
+                                <div class="text-xs uppercase font-extrabold text-eggYellow tracking-wider">¡OFERTA ESPECIAL!</div>
+                                <div class="text-4xl md:text-5xl font-black text-white tracking-tight my-1">
+                                    S/ <span class="text-eggYellow">${prod.price}</span>
+                                </div>
+                                <div class="text-xs text-purple-200 italic">Por tiempo limitado • Incluye 30 Huevos</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <a href="https://wa.me/51910770209?text=Hola,%20deseo%20comprar%20la%20${encodeURIComponent(prod.title)}%20a%20S/%20${prod.price}" 
+                               target="_blank" 
+                               class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded-xl text-center flex items-center justify-center gap-2 shadow-md transition text-sm">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                                <span>Pedir por S/ ${prod.price}</span>
+                            </a>
+                            <button onclick="addToCart(${prod.id})" class="bg-eggYellow hover:bg-eggYellowHover text-eggPurple font-bold py-2.5 px-4 rounded-xl shadow transition text-sm">
+                                <i class="fas fa-plus"></i> Añadir
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(slide);
+
+                // Indicators
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all ${isCurrent ? 'bg-eggPurple w-8' : 'bg-gray-300'}`;
+                dot.onclick = () => goToSlide(idx);
+                indicators.appendChild(dot);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % products.length;
+            renderCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + products.length) % products.length;
+            renderCarousel();
+        }
+
+        function goToSlide(idx) {
+            currentIndex = idx;
+            renderCarousel();
+        }
+
+        // Render Static Grid Products
+        function renderProductGrid() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            products.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all border border-gray-100 flex flex-col justify-between group";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="bg-purple-50 text-eggPurple font-bold text-xs px-2.5 py-1 rounded-md inline-block mb-2">
+                            ${prod.badge}
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 text-lg group-hover:text-eggPurple transition">${prod.title}</h4>
+                        <p class="text-xs text-gray-500 font-medium mb-2">${prod.subtitle}</p>
+                        
+                        <div class="my-3 bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                            <span class="text-xs text-gray-400 block font-semibold">PRECIO HOY</span>
+                            <span class="text-2xl font-black text-eggPurple">S/ ${prod.price}</span>
+                        </div>
+
+                        <p class="text-xs text-gray-600 leading-relaxed mb-3">${prod.desc}</p>
+                    </div>
+
+                    <div>
+                        <div class="text-[11px] text-gray-400 font-medium mb-3 flex items-center gap-1">
+                            <i class="fas fa-weight-hanging text-eggPurple"></i> ${prod.weight}
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <a href="https://wa.me/51910770209?text=Hola,%20me%20interesa%20la%20${encodeURIComponent(prod.title)}%20a%20S/%20${prod.price}" 
+                               target="_blank" 
+                               class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg text-center text-xs flex items-center justify-center gap-1 shadow transition">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <button onclick="addToCart(${prod.id})" class="bg-purple-100 hover:bg-eggPurple hover:text-white text-eggPurple font-bold p-2 rounded-lg transition text-xs">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Shopping Cart Logic
+        function addToCart(id) {
+            if (cart[id]) {
+                cart[id]++;
+            } else {
+                cart[id] = 1;
+            }
+            updateCartUI();
+            
+            // Visual feedback
+            const cartCountEl = document.getElementById('cart-count');
+            cartCountEl.classList.add('scale-125');
+            setTimeout(() => cartCountEl.classList.remove('scale-125'), 200);
+        }
+
+        function updateQuantity(id, delta) {
+            if (cart[id]) {
+                cart[id] += delta;
+                if (cart[id] <= 0) {
+                    delete cart[id];
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+
+            let totalItems = 0;
+            let totalPrice = 0;
+            container.innerHTML = '';
+
+            const keys = Object.keys(cart);
+            if (keys.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-6 text-sm">Tu canasta está vacía. ¡Añade algunas ofertas de huevos!</p>`;
+            } else {
+                keys.forEach(id => {
+                    const prod = products.find(p => p.id == id);
+                    const qty = cart[id];
+                    const subtotal = (parseFloat(prod.price) * qty).toFixed(2);
+                    totalItems += qty;
+                    totalPrice += parseFloat(subtotal);
+
+                    const itemRow = document.createElement('div');
+                    itemRow.className = "py-3 flex items-center justify-between";
+                    itemRow.innerHTML = `
+                        <div>
+                            <h5 class="font-bold text-sm text-slate-800">${prod.title}</h5>
+                            <p class="text-xs text-gray-400">S/ ${prod.price} c/u</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center border border-gray-200 rounded-lg">
+                                <button onclick="updateQuantity(${prod.id}, -1)" class="px-2 py-0.5 text-gray-500 hover:bg-gray-100 font-bold">-</button>
+                                <span class="px-2 text-xs font-bold">${qty}</span>
+                                <button onclick="updateQuantity(${prod.id}, 1)" class="px-2 py-0.5 text-gray-500 hover:bg-gray-100 font-bold">+</button>
+                            </div>
+                            <span class="font-black text-sm text-eggPurple w-16 text-right">S/ ${subtotal}</span>
+                        </div>
+                    `;
+                    container.appendChild(itemRow);
+                });
+            }
+
+            cartCount.innerText = totalItems;
+            if (totalItems > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+
+            totalEl.innerText = `S/ ${totalPrice.toFixed(2)}`;
+        }
+
+        function openCartModal() {
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').classList.add('hidden');
+        }
+
+        function sendCartToWhatsApp() {
+            const keys = Object.keys(cart);
+            if (keys.length === 0) {
+                alert('Por favor añade al menos una oferta a tu canasta.');
+                return;
+            }
+
+            let message = "Hola, deseo realizar el siguiente pedido de huevos frescos:\n\n";
+            let grandTotal = 0;
+
+            keys.forEach(id => {
+                const prod = products.find(p => p.id == id);
+                const qty = cart[id];
+                const subtotal = (parseFloat(prod.price) * qty).toFixed(2);
+                grandTotal += parseFloat(subtotal);
+                message += `• ${qty}x ${prod.title} (S/ ${prod.price}) = S/ ${subtotal}\n`;
+            });
+
+            message += `\n*Total a pagar: S/ ${grandTotal.toFixed(2)}*\n\nPor favor confirmen la disponibilidad y dirección de entrega.`;
+
+            const encodedUrl = `https://wa.me/51910770209?text=${encodeURIComponent(message)}`;
+            window.open(encodedUrl, '_blank');
+        }
+
+        // Initialize Carousel Auto Advance
+        let autoSlide = setInterval(nextSlide, 5000);
+
+        // Pause autoslide on hover
+        const carouselEl = document.getElementById('carousel-slides');
+        carouselEl.addEventListener('mouseenter', () => clearInterval(autoSlide));
+        carouselEl.addEventListener('mouseleave', () => autoSlide = setInterval(nextSlide, 5000));
+
+        // Initial Load
+        window.onload = function() {
+            renderCarousel();
+            renderProductGrid();
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
